@@ -1,16 +1,9 @@
-import pressAnyKey from "press-any-key";
 import PromptSync from "prompt-sync";
 
 import { customText, customLog, createTextBlock } from "./styling.js";
 const prompt = PromptSync();
 
 let repeat = true;
-
-// waits for user to exit the program
-const keyToExit = () =>
-  pressAnyKey(customText("Drücke eine Taste um zu beenden")).then(() =>
-    process.exit()
-  );
 
 // gets the current Time
 const getNow = () => new Date().toLocaleTimeString("de-DE", "HH:MM");

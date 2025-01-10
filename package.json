@@ -12,8 +12,5 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "press-any-key": "^1.1.0"
-  }
+  "description": ""
 }
