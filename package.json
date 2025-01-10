@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "prompt-sync": "^4.2.0",
+    "strip-ansi": "^7.1.0"
+  },
+  "name": "programmieren",
+  "version": "1.0.0",
+  "main": "weather.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "press-any-key": "^1.1.0"
+  }
+}
