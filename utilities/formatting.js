@@ -1,11 +1,10 @@
 import { styleText } from "node:util";
 import styles from "./styles.js";
+import { regexANSI } from "./DO_NOT_TOUCH.js";
 
-const regexANSI =
-  /(\x1b|\033)\[[0-9;]*m/;
 
 // returns custom styled text according to the set styles
-export function customText(text, style = "output") {
+export function customText(text = "", style = "output") {
   switch (style) {
     case "err":
     case "error":
@@ -14,6 +13,15 @@ export function customText(text, style = "output") {
     case "warn":
     case "warning":
       return styleText(styles.warn, `Warnung! ${text}`);
+
+    case "prompt":
+      return styleText(styles.input, text) + styleText(styles.carret, " > ");
+
+    case "yesno":
+      return styleText(
+        styles.input,
+        text + " (y/n)" + styleText(styles.carret, " > ")
+      );
 
     case "title":
       return styleText(styles.title, text);
@@ -26,8 +34,8 @@ export function customText(text, style = "output") {
     case "input":
       return styleText(styles.input, text);
 
-    case "prompt":
-      return styleText(styles.input, text) + styleText(styles.carret, " > ");
+    case "box":
+      return styleText(styles.box, text);
 
     default:
       throw new TypeError(`${style} ist kein valider text style`);
@@ -41,13 +49,16 @@ export function customLog(text, style) {
 
 // makes a box around an array of strings
 export function createTextBlock(textArray) {
+  // this makes single lines possible, because map() doesn't make sense on a single string
+  if (typeof textArray === "string") {
+    textArray = [textArray];
+  }
+
   const maxWidth = Math.max(
     ...textArray.map((str) => str.replace(regexANSI, ".").length)
   );
 
-  console.error(maxWidth);
-
-  const outerBorder = "#".repeat(maxWidth + 6);
+  const outerBorder = styleText(styles.box, "#".repeat(maxWidth + 6));
   const innerBorder = `#${" ".repeat(maxWidth + 4)}#`;
 
   const rowsArray = textArray.map((str) => {
@@ -59,4 +70,9 @@ export function createTextBlock(textArray) {
   const result = `${outerBorder}\n${innerBorder}\n${rows}\n${innerBorder}\n${outerBorder}`;
 
   return result;
+}
+
+// actually clears the console completely
+export function clear() {
+  process.stdout.write("\x1b[2J\x1b[0f");
 }
