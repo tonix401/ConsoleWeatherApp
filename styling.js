@@ -1,28 +1,33 @@
 import { styleText } from "node:util";
+import styles from "./styles.js";
 
-const titleStyle = ["cyan", "bold"];
-const outputStyle = "white";
-const inputStyle = ["cyan"];
+const regexANSI =
+  /(\x1b|\033)\[[0-9;]*m/;
 
-const colors = ["red", "green", "yellow", "blue", "magenta", "cyan"];
-let colorCounter = colors.length - 1;
-
-// returns custom styled text
+// returns custom styled text according to the set styles
 export function customText(text, style = "output") {
   switch (style) {
+    case "err":
+    case "error":
+      return styleText(styles.error, `Fehler! ${text}`);
+
+    case "warn":
+    case "warning":
+      return styleText(styles.warn, `Warnung! ${text}`);
+
     case "title":
-      return styleText(titleStyle, text);
+      return styleText(styles.title, text);
 
-    case "output":
     case "out":
-      return styleText(outputStyle, text);
+    case "output":
+      return styleText(styles.output, text);
 
-    case "input":
     case "in":
-      return styleText(inputStyle, text);
+    case "input":
+      return styleText(styles.input, text);
 
     case "prompt":
-      return styleText(inputStyle, text) + styleText("blink", " > ");
+      return styleText(styles.input, text) + styleText(styles.carret, " > ");
 
     default:
       throw new TypeError(`${style} ist kein valider text style`);
@@ -36,39 +41,22 @@ export function customLog(text, style) {
 
 // makes a box around an array of strings
 export function createTextBlock(textArray) {
-  const maxWidth = Math.max(...textArray.map((str) => str.length));
+  const maxWidth = Math.max(
+    ...textArray.map((str) => str.replace(regexANSI, ".").length)
+  );
 
-  const outerBorder = [..."#".repeat(maxWidth + 6)]
-    .map((char) => colorString(char))
-    .join("");
-  const innerBorderHash = cHash();
-  const innerBorder =
-    innerBorderHash + `${" ".repeat(maxWidth + 4)}` + innerBorderHash;
+  console.error(maxWidth);
+
+  const outerBorder = "#".repeat(maxWidth + 6);
+  const innerBorder = `#${" ".repeat(maxWidth + 4)}#`;
 
   const rowsArray = textArray.map((str) => {
-    const colorHash = cHash();
-    return (
-      colorHash + `  ${str} ${" ".repeat(maxWidth - str.length)} ` + colorHash
-    );
+    return `#  ${str} ${" ".repeat(
+      maxWidth - str.replace(regexANSI, "").length
+    )} #`;
   });
   const rows = rowsArray.join("\n");
   const result = `${outerBorder}\n${innerBorder}\n${rows}\n${innerBorder}\n${outerBorder}`;
 
   return result;
-}
-
-const cHash = () => styleText(getNextColor(), "#");
-const colorString = (string) => styleText(getNextColor(), string);
-
-// gets a color for the box borders
-function getNextColor() {
-  let color = colors[colorCounter];
-
-  if (colorCounter === 0) {
-    colorCounter = colors.length - 1;
-  } else {
-    colorCounter--;
-  }
-
-  return color;
 }
