@@ -20,6 +20,7 @@ export default async function main() {
     case "1":
       const data = await load();
       customLog(JSON.stringify(data), "output");
+      main();
       break;
 
     case "2":

@@ -20,6 +20,4 @@ export default function showTempByCity() {
       randomTemp <= 10 ? "Etwas frisch!" : "Angenehm!",
     ])
   );
-
-  pressAnyKey("Drücke eine Taste um das Menu zu sehen");
 }
