@@ -1,6 +1,6 @@
 import { styleText } from "node:util";
-import styles from "./styles.js";
-import textTypes from "./textTypes.js";
+import styles from "./types/styles.js";
+import textTypes from "./types/textTypes.js";
 import { regexANSI } from "./DO_NOT_TOUCH.js";
 
 
@@ -84,5 +84,6 @@ export function createTextBox(textArray) {
 
 // actually clears the console completely
 export function clear() {
-  process.stdout.write("\x1b[2J\x1b[0f");
+  //TODO revert
+  //process.stdout.write("\x1b[2J\x1b[0f");
 }

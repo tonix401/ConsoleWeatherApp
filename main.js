@@ -1,7 +1,7 @@
 import notification from "./activities/notification.js";
 import { clear, createTextBox, customText } from "./utilities/formatting.js";
-import { load, logInfo } from "./utilities/store.js";
-import textTypes from "./utilities/textTypes.js";
+import { load, log } from "./utilities/store.js";
+import textTypes from "./utilities/types/textTypes.js";
 import exit from "./activities/exit.js";
 import saveMessage from "./activities/saveMessage.js";
 import PromptSync from "prompt-sync";
@@ -16,7 +16,7 @@ async function main() {
     case "1":
       load()
       .then((data) => {
-        logInfo("test", textTypes.error);
+        log("test", textTypes.error);
         notification("Der Speicherinhalt:\n" + 
           JSON.stringify(data)
             .replaceAll(",","\n")
@@ -71,6 +71,7 @@ function menu() {
 
 // starting the program
 notification("Herzlich willkommen zur Wetterapp", textTypes.title);
+log("App started", textTypes.output)
 while(true){
   main();
 }

@@ -2,7 +2,7 @@ import PromptSync from "prompt-sync";
 import { createTextBox, customText, clear } from "../utilities/formatting.js";
 import { save, load } from "../utilities/store.js";
 import notification from "./notification.js";
-import textTypes from "../utilities/textTypes.js";
+import textTypes from "../utilities/types/textTypes.js";
 const prompt = PromptSync();
 
 export default async function saveMessage() {
