@@ -15,20 +15,20 @@ async function main() {
   switch (input) {
     case "1":
       load()
-      .then((data) => {
-        log("test", textTypes.error);
-        notification("Der Speicherinhalt:\n" + 
-          JSON.stringify(data)
-            .replaceAll(",","\n")
-            .replaceAll(/[\{\}\"]/g,"")
-            .replaceAll(":", ": "),
-          textTypes.output);
-      })
-      .catch(
-        err => { 
-          notification(err.message, textTypes.error)
-        }
-      );
+        .then((data) => {
+          log("test", textTypes.error);
+          notification(
+            "Der Speicherinhalt:\n" +
+              JSON.stringify(data)
+                .replaceAll(",", "\n")
+                .replaceAll(/[\{\}\"]/g, "")
+                .replaceAll(":", ": "),
+            textTypes.output
+          );
+        })
+        .catch((err) => {
+          notification(err.message, textTypes.error);
+        });
       break;
 
     case "2":
@@ -37,9 +37,12 @@ async function main() {
 
     case "3":
       load().then((data) => {
-        console.log()
-        notification("Die letzte Nachricht war:\n" + data.message, textTypes.output);
-      })
+        console.log();
+        notification(
+          "Die letzte Nachricht war:\n" + data.message,
+          textTypes.output
+        );
+      });
       break;
 
     case "9":
@@ -65,13 +68,15 @@ function menu() {
 
   const styledMenu = menu.map((line) => customText(line, textTypes.output));
   console.log(createTextBox(styledMenu));
-  const userInput = prompt(customText("Bitte Nummer eingeben", textTypes.prompt));
+  const userInput = prompt(
+    customText("Bitte Nummer eingeben", textTypes.prompt)
+  );
   return userInput;
-};
+}
 
 // starting the program
 notification("Herzlich willkommen zur Wetterapp", textTypes.title);
-log("App started", textTypes.output)
-while(true){
+log("App started", textTypes.output);
+while (true) {
   main();
 }

@@ -3,7 +3,6 @@ import styles from "./types/styles.js";
 import textTypes from "./types/textTypes.js";
 import { regexANSI } from "./DO_NOT_TOUCH.js";
 
-
 // returns custom styled text according to the set styles
 export function customText(text = "", style = textTypes.output) {
   switch (style) {
@@ -50,19 +49,17 @@ export function customLog(text, style) {
 
 // makes a box around a string or array of strings
 export function createTextBox(textArray) {
-
   // this turns (formatted) strings into an array, that can be "boxed"
   if (typeof textArray === "string") {
     let format;
 
-    if(regexANSI.test(textArray)){
+    if (regexANSI.test(textArray)) {
       format = textArray.match(regexANSI)[0];
-      textArray = textArray.replace("\n", `${format}\n\x1B[0m`)
+      textArray = textArray.replace("\n", `${format}\n\x1B[0m`);
     }
 
     textArray = textArray.split("\n");
   }
-
 
   const maxWidth = Math.max(
     ...textArray.map((str) => str.replace(regexANSI, "").length)
