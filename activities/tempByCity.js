@@ -7,10 +7,10 @@ const getTemperature = () => Math.floor(Math.random() * 20);
 
 export default function showTempByCity() {
   let userInput = prompt(
-    customText("Für welche Stadt willst Du das Wetter wissen?", "prompt")
+    customText("Für welche Stadt willst Du das Wetter wissen?", textTypes.prompt)
   );
 
-  clear();
+  clear()
 
   const randomTemp = getTemperature();
 

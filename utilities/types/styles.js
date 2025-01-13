@@ -1,10 +1,10 @@
 // only the styles for styleText() are allowed here
 const styles = {
   title: ["green", "bold"],
-  output: "green",
-  input: "green",
-  error: ["red", "bold"],
-  warn: ["yellow", "bold"],
+  output: "greenBright",
+  input: "greenBright",
+  error: ["redBright", "italic"],
+  warn: ["yellow", "italic"],
   carret: ["white", "bold"],
   box: ["white"],
 };
